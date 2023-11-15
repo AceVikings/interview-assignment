@@ -1,4 +1,3 @@
-// Derived from: https://github.com/eth-infinitism/account-abstraction/blob/develop/contracts/interfaces/IEntryPoint.sol
 /**
  ** Account-Abstraction (EIP-4337) singleton EntryPoint implementation.
  ** Only one instance required on each chain.
@@ -66,6 +65,20 @@ interface IEntryPoint is IStakeManager, INonceManager {
     );
 
     /**
+     * An event emitted if the UserOperation Paymaster's "postOp" call reverted with non-zero length.
+     * @param userOpHash   - The request unique identifier.
+     * @param sender       - The sender of this request.
+     * @param nonce        - The nonce used in the request.
+     * @param revertReason - The return bytes from the (reverted) call to "callData".
+     */
+    event PostOpRevertReason(
+        bytes32 indexed userOpHash,
+        address indexed sender,
+        uint256 nonce,
+        bytes revertReason
+    );
+
+    /**
      * An event emitted by handleOps(), before starting the execution loop.
      * Any event emitted before this event, is part of the validation.
      */
@@ -88,6 +101,8 @@ interface IEntryPoint is IStakeManager, INonceManager {
      *                  so a failure can be attributed to the correct entity.
      */
     error FailedOp(uint256 opIndex, string reason);
+
+    error PostOpReverted(bytes returnData);
 
     /**
      * Error case when a signature aggregator fails to verify the aggregated signature it had created.
