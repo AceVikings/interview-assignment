@@ -24,3 +24,7 @@ We are primarily focusing on 2 things: <br>
    Document the design decisions made during the contract creation (can be bullet points just for yourself, but will be discussed afterwards).
 
 ---
+
+## Implementation
+
+ERC4337 is still in drafts but some implementations like Eth-infinitism exist and our work heavily derives from them for base wallet implementation, this includes deriving from their implementation for validateUserOp, BaseWallet, Entrypoint and BasePaymaster.
